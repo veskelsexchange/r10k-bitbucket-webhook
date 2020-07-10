@@ -1,0 +1,7 @@
+groups:
+  - name: puppetmasters
+    targets:
+      - master1.example.com
+    config:
+      transport: ssh
+      host-key-check: false

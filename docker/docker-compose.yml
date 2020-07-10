@@ -1,0 +1,20 @@
+version: '3.3'
+
+    # Though optional, I do recommend mounting a valid SSH key for Puppet Bolt into this container
+    # Otherwise, please make sure you copied the public portion of the key during image build
+
+    # Set LISTEN and RUNMODE env variables to match your desired environment. If using Production,
+    # please use either NGINX or Apache to host an HTTPS reverse proxy for your server.
+
+services:
+    webhook:
+        image: r10kbitbuckethook:latest
+        restart: unless-stopped
+        volumes:
+        - '$PWD/../web:/web'
+        - '$PWD/../worker:/worker'
+        - '$PWD/../inventory.yaml:/worker/inventory.yaml'
+        environment:
+            - "LISTEN=127.0.0.1"
+            - "RUNMODE=development"
+        network_mode: "host"
